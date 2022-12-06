@@ -81,6 +81,11 @@ public class GridCeldas {
         return celdas.get(x + (y*tamano));
     }
 
+
+    public Celda getCelda(int posicion) {
+        return celdas.get(posicion);
+    }
+
     public List<Celda> getCeldasProximas(int fila, int columna) {
         List<Celda> celdas = new ArrayList<>();
 

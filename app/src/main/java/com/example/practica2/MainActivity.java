@@ -85,44 +85,6 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
 
     @Override
-    public void click(Celda celda) {
-
-        if(gridCeldas.getPartidaFinalizada()) {
-            mostrarPerderPartida();
-            return;
-        }
-
-        if (celda.getRevelado()) {
-            return;
-        }
-
-        int fila = celda.getFila();
-        int columna = celda.getColumna();
-
-        int proximos = gridCeldas.proximidadHipotenochas(fila,columna);
-
-
-
-        celda.setRevelado(true);
-        celda.setNumHipotenochas(proximos);
-
-        adapter.notifyDataSetChanged();
-
-        if (celda.getHipotenocha()) {
-            gridCeldas.setPartidaFinalizada(true);
-            mostrarPerderPartida();
-        }
-
-    }
-
-    @Override
-    public boolean onCeldaLongClick(Celda celda) {
-
-        System.out.println("Hola");
-        return true;
-    }
-
-    @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
@@ -165,4 +127,47 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     }
 
 
+    @Override
+    public void onCeldaClick(int posicion) {
+
+        Celda celda = gridCeldas.getCelda(posicion);
+
+        if(celda == null){
+            return;
+        }
+
+        if(gridCeldas.getPartidaFinalizada()) {
+            mostrarPerderPartida();
+            return;
+        }
+
+        if (celda.getRevelado()) {
+            return;
+        }
+
+        int fila = celda.getFila();
+        int columna = celda.getColumna();
+
+        int proximos = gridCeldas.proximidadHipotenochas(fila,columna);
+
+
+
+        celda.setRevelado(true);
+        celda.setNumHipotenochas(proximos);
+
+        adapter.notifyDataSetChanged();
+
+        if (celda.getHipotenocha()) {
+            gridCeldas.setPartidaFinalizada(true);
+            mostrarPerderPartida();
+        }
+
+    }
+
+    @Override
+    public void onCeldaLongClick(int posicion) {
+
+        System.out.println(posicion);
+
+    }
 }

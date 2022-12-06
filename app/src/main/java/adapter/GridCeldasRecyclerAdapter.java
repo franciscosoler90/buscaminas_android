@@ -61,6 +61,8 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
             super(itemView);
             botonCelda = itemView.findViewById(R.id.buttonCelda);
             layout = itemView.findViewById(R.id.layoutCelda);
+
+
         }
 
         public void bind(final Celda celda) {
@@ -127,7 +129,25 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
             }
 
 
-            botonCelda.setOnClickListener(view -> listener.click(celda));
+            botonCelda.setOnClickListener(view -> {
+                if(listener != null){
+                    int posicion = getAdapterPosition();
+                    if(posicion != RecyclerView.NO_POSITION){
+                        listener.onCeldaClick(posicion);
+                    }
+                }
+            });
+
+            botonCelda.setOnLongClickListener(view -> {
+                if(listener != null){
+                    int posicion = getAdapterPosition();
+                    if(posicion != RecyclerView.NO_POSITION){
+                        listener.onCeldaLongClick(posicion);
+                    }
+                }
+                return true;
+            });
+
         }
 
     }

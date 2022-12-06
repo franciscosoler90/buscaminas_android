@@ -1,9 +1,7 @@
 package celda;
 
 public interface OnCeldaClickListener {
-    void click(Celda celda);
-
-
-    boolean onCeldaLongClick(Celda celda);
+    void onCeldaClick(int posicion);
+    void onCeldaLongClick(int posicion);
 }
 

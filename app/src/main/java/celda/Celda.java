@@ -2,14 +2,14 @@ package celda;
 
 public class Celda {
 
-    private final int id;
+    private final int posicion;
     private final int fila;
     private final int columna;
     private int numHipotenochas;
     private boolean revelado, hipotenocha;
 
-    public Celda(int id, int fila, int columna){
-        this.id = id;
+    public Celda(int posicion, int fila, int columna){
+        this.posicion = posicion;
         this.fila = fila;
         this.columna = columna;
         this.revelado = false;
@@ -31,8 +31,8 @@ public class Celda {
         this.revelado = revelado;
     }
 
-    public int getId() {
-        return id;
+    public int getPosicion() {
+        return posicion;
     }
 
     public boolean getHipotenocha() {

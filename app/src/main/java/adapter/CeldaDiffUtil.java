@@ -12,7 +12,7 @@ public class CeldaDiffUtil extends DiffUtil.ItemCallback<Celda> {
     @Override
     public boolean areItemsTheSame(
             @NonNull Celda celda1, @NonNull Celda celda2) {
-        return celda1.getId() == celda2.getId();
+        return celda1.getPosicion() == celda2.getPosicion();
     }
 
     @Override
