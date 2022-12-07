@@ -11,10 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import adapter.GridCeldasRecyclerAdapter;
 import celda.Celda;
 import celda.GridCeldas;
@@ -95,6 +92,10 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
 
     public void mostrarPerderPartida() {
+
+        gridCeldas.revelarHipotenochas();
+        adapter.notifyDataSetChanged();
+
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle(getString(R.string.perdido));
         dialogo.setMessage(getString(R.string.reiniciar));
@@ -135,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     @Override
     public void onCeldaClick(int posicion) {
 
+        gridCeldas.revelarHipotenochas();
+        adapter.notifyDataSetChanged();
+
+        /*
         Celda celda = gridCeldas.getCelda(posicion);
 
         if(celda == null){
@@ -152,13 +157,8 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
         int fila = celda.getFila();
         int columna = celda.getColumna();
-
         int proximos = gridCeldas.proximidadHipotenochas(fila,columna);
-
         celda.setRevelado(true);
-        celda.setNumHipotenochas(proximos);
-
-        adapter.notifyDataSetChanged();
 
         if (celda.getHipotenocha()) {
 
@@ -167,42 +167,51 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
         }else{
 
-            if(proximos == 0){
-                    List<Celda> toClear = new ArrayList<>();
-                    List<Celda> toCheckAdjacents = new ArrayList<>();
-                    toCheckAdjacents.add(celda);
+            if(proximos > 0) {
 
-                    while (toCheckAdjacents.size() > 0) {
+                List<Celda> toClear = new ArrayList<>();
+                List<Celda> toCheckAdjacents = new ArrayList<>();
+                toCheckAdjacents.add(celda);
 
-                        Celda c = toCheckAdjacents.get(0);
+                while (toCheckAdjacents.size() > 0) {
 
-                        int[] celdaEnPosicion = gridCeldas.toXY(celda.getPosicion());
+                    Celda c = toCheckAdjacents.get(0);
 
-                        for (Celda adjacent: gridCeldas.getCeldasProximas(celdaEnPosicion[0], celdaEnPosicion[1])) {
+                    int[] celdaEnPosicion = gridCeldas.toXY(celda.getPosicion());
 
-                            if (!adjacent.getHipotenocha()) {
-                                if (!toClear.contains(adjacent)) {
-                                    if (!toCheckAdjacents.contains(adjacent)) {
-                                        toCheckAdjacents.add(adjacent);
-                                    }
-                                }
-                            } else {
-                                if (!toClear.contains(adjacent)) {
-                                    toClear.add(adjacent);
+                    for (Celda adjacent : gridCeldas.getCeldasProximas(celdaEnPosicion[0], celdaEnPosicion[1])) {
+
+                        if (!adjacent.getHipotenocha()) {
+                            if (!toClear.contains(adjacent)) {
+                                if (!toCheckAdjacents.contains(adjacent)) {
+                                    toCheckAdjacents.add(adjacent);
                                 }
                             }
+                        } else {
+                            if (!toClear.contains(adjacent)) {
+                                toClear.add(adjacent);
+                            }
                         }
-                        toCheckAdjacents.remove(c);
-                        toClear.add(c);
                     }
+                    toCheckAdjacents.remove(c);
+                    toClear.add(c);
+                }
 
-                    for (Celda c: toClear) {
+                for (Celda c : toClear) {
+
+                    if(!c.getHipotenocha()) {
                         c.setRevelado(true);
                     }
 
                 }
 
+
+            }
         }
+
+        adapter.notifyDataSetChanged();
+
+         */
 
     }
 
@@ -211,9 +220,14 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
         Celda celda = gridCeldas.getCelda(posicion);
 
+        if(celda.getMarcado()){
+            return;
+        }
+
         if(celda.getHipotenocha()){
 
             celda.setRevelado(true);
+            celda.setMarcado(true);
 
             if(gridCeldas.disminuirHipotenochas()){
                 Toast.makeText(this,"¡Enhorabuena has ganado!", Toast.LENGTH_SHORT).show();

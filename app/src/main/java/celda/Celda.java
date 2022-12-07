@@ -6,13 +6,18 @@ public class Celda {
     private final int fila;
     private final int columna;
     private int numHipotenochas;
-    private boolean revelado, hipotenocha;
+    private boolean revelado;
+    private boolean hipotenocha;
+
+    private boolean marcado;
 
     public Celda(int posicion, int fila, int columna){
         this.posicion = posicion;
         this.fila = fila;
         this.columna = columna;
         this.revelado = false;
+        this.hipotenocha = false;
+        this.marcado = false;
     }
 
     public int getColumna() {
@@ -41,6 +46,14 @@ public class Celda {
 
     public void setHipotenocha(boolean hipotenocha) {
         this.hipotenocha = hipotenocha;
+    }
+
+    public boolean getMarcado() {
+        return marcado;
+    }
+
+    public void setMarcado(boolean marcado) {
+        this.marcado = marcado;
     }
 
     public int getNumHipotenochas() {

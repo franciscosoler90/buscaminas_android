@@ -31,7 +31,6 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
         this.listener = listener;
     }
 
-
     @NonNull
     @Override
     public GridCeldasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -65,6 +64,12 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
         public void bind(final Celda celda) {
 
+            if(celda.getMarcado()){
+                botonCelda.setBackgroundColor(Color.DKGRAY);
+                botonCelda.setText("H");
+                return;
+            }
+
             if( celda.getRevelado() ){
 
                 if(celda.getHipotenocha()) {
@@ -78,7 +83,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
                     switch(proximos){
 
                         case 0:
-                            botonCelda.setVisibility(View.INVISIBLE);
+                            botonCelda.setBackgroundColor(Color.parseColor("#9ACD84"));
                             break;
 
                         case 1:

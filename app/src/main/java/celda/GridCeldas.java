@@ -39,11 +39,11 @@ public class GridCeldas {
 
         int celdaId = 0;
 
-        for(int x = 0; x < tamano; x++){
+        for(int fila = 0; fila < tamano; fila++){
 
-            for(int y = 0; y < tamano; y++){
+            for(int columna = 0; columna < tamano; columna++){
 
-                Celda celda = new Celda(celdaId,x,y);
+                Celda celda = new Celda(celdaId,fila,columna);
 
                 nuevaLista.add(celda);
 
@@ -61,10 +61,10 @@ public class GridCeldas {
 
         while (bombas < hipotenochas) {
 
-            int x = new Random().nextInt(tamano);
-            int y = new Random().nextInt(tamano);
+            int fila = new Random().nextInt(tamano);
+            int columna = new Random().nextInt(tamano);
 
-            Celda celda = getCelda(x,y);
+            Celda celda = getCelda(fila,columna);
 
             if (!celda.getHipotenocha()) {
                 celda.setHipotenocha(true);
@@ -72,13 +72,21 @@ public class GridCeldas {
             }
         }
 
+        int proximos;
+
+        for(Celda c : this.celdas){
+            proximos = proximidadHipotenochas(c.getFila(), c.getColumna());
+            System.out.println(proximos);
+            c.setNumHipotenochas(proximos);
+        }
+
     }
 
-    public Celda getCelda(int x, int y) {
-        if (x < 0 || x >= tamano || y < 0 || y >= tamano) {
+    public Celda getCelda(int fila, int columna) {
+        if (fila < 0 || fila >= tamano || columna < 0 || columna >= tamano) {
             return null;
         }
-        return celdas.get(x + (y*tamano));
+        return celdas.get(fila + (columna*tamano));
     }
 
 
@@ -108,14 +116,14 @@ public class GridCeldas {
         return celdas;
     }
 
-    public int proximidadHipotenochas(int fila, int columna) {
+    public int proximidadHipotenochas(int columna, int fila) {
 
         List<Celda> celdasProximas = getCeldasProximas(fila, columna);
 
         int hipotenochasProximas = 0;
 
-        for (int i = 0; i < celdasProximas.size(); i++){
-            if(celdasProximas.get(i).getHipotenocha()){
+        for (Celda c: celdasProximas){
+            if(c.getHipotenocha()){
                 hipotenochasProximas++;
             }
         }
@@ -143,6 +151,12 @@ public class GridCeldas {
             return false;
         }else{
             return true;
+        }
+    }
+
+    public void revelarHipotenochas(){
+        for(Celda c : celdas){
+            c.setRevelado(true);
         }
     }
 
