@@ -74,7 +74,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
                 if(celda.getHipotenocha()) {
 
-                    botonCelda.setBackgroundColor(Color.parseColor("#E31C1C"));
+                    botonCelda.setBackgroundColor(Color.BLACK);
 
                 }else{
 

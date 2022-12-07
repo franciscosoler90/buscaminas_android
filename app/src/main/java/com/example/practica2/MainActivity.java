@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 import java.util.List;
 import adapter.GridCeldasRecyclerAdapter;
 import celda.Celda;
@@ -136,10 +138,6 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     @Override
     public void onCeldaClick(int posicion) {
 
-        gridCeldas.revelarHipotenochas();
-        adapter.notifyDataSetChanged();
-
-        /*
         Celda celda = gridCeldas.getCelda(posicion);
 
         if(celda == null){
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
         }else{
 
-            if(proximos > 0) {
+            if(proximos == 0) {
 
                 List<Celda> toClear = new ArrayList<>();
                 List<Celda> toCheckAdjacents = new ArrayList<>();
@@ -210,8 +208,6 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         }
 
         adapter.notifyDataSetChanged();
-
-         */
 
     }
 
