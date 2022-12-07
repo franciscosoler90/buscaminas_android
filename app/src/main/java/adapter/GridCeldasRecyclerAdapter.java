@@ -61,8 +61,6 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
             super(itemView);
             botonCelda = itemView.findViewById(R.id.buttonCelda);
             layout = itemView.findViewById(R.id.layoutCelda);
-
-
         }
 
         public void bind(final Celda celda) {
@@ -115,19 +113,15 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
                             botonCelda.setBackgroundColor(Color.parseColor("#9B2712"));
                             break;
 
-
                     }
 
                     botonCelda.setText(String.valueOf(proximos));
-
-
 
                 }
 
             }else{
                 botonCelda.setBackgroundColor(Color.GRAY);
             }
-
 
             botonCelda.setOnClickListener(view -> {
                 if(listener != null){

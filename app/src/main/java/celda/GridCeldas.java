@@ -130,6 +130,22 @@ public class GridCeldas {
         generarGrid();
     }
 
+
+    public int[] toXY(int index) {
+        int y = index / tamano;
+        int x = index - (y*tamano);
+        return new int[]{x, y};
+    }
+
+    public boolean disminuirHipotenochas(){
+        if(hipotenochas > 0){
+            hipotenochas--;
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public boolean getPartidaFinalizada() {
         return partidaFinalizada;
     }
@@ -144,6 +160,10 @@ public class GridCeldas {
 
     public Integer getTamano() {
         return tamano;
+    }
+
+    public Integer getHipotenochas() {
+        return hipotenochas;
     }
 
     public void setModoJuego(Integer modoJuego) {

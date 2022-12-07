@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adapter.GridCeldasRecyclerAdapter;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
                 gridRecyclerView.setAdapter(adapter);
 
+                setTextHipotenochas();
 
             }catch(Exception e){
                  System.out.println(e.getMessage());
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         dialogo.setCancelable(false);
         dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
             gridCeldas.reiniciarPartida();
+            setTextHipotenochas();
             adapter.notifyDataSetChanged();
 
         });
@@ -150,16 +155,53 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
         int proximos = gridCeldas.proximidadHipotenochas(fila,columna);
 
-
-
         celda.setRevelado(true);
         celda.setNumHipotenochas(proximos);
 
         adapter.notifyDataSetChanged();
 
         if (celda.getHipotenocha()) {
+
             gridCeldas.setPartidaFinalizada(true);
             mostrarPerderPartida();
+
+        }else{
+
+            if(proximos == 0){
+                    List<Celda> toClear = new ArrayList<>();
+                    List<Celda> toCheckAdjacents = new ArrayList<>();
+                    toCheckAdjacents.add(celda);
+
+                    while (toCheckAdjacents.size() > 0) {
+
+                        Celda c = toCheckAdjacents.get(0);
+
+                        int[] celdaEnPosicion = gridCeldas.toXY(celda.getPosicion());
+
+                        for (Celda adjacent: gridCeldas.getCeldasProximas(celdaEnPosicion[0], celdaEnPosicion[1])) {
+
+                            if (!adjacent.getHipotenocha()) {
+                                if (!toClear.contains(adjacent)) {
+                                    if (!toCheckAdjacents.contains(adjacent)) {
+                                        toCheckAdjacents.add(adjacent);
+                                    }
+                                }
+                            } else {
+                                if (!toClear.contains(adjacent)) {
+                                    toClear.add(adjacent);
+                                }
+                            }
+                        }
+                        toCheckAdjacents.remove(c);
+                        toClear.add(c);
+                    }
+
+                    for (Celda c: toClear) {
+                        c.setRevelado(true);
+                    }
+
+                }
+
         }
 
     }
@@ -167,7 +209,35 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     @Override
     public void onCeldaLongClick(int posicion) {
 
-        System.out.println(posicion);
+        Celda celda = gridCeldas.getCelda(posicion);
+
+        if(celda.getHipotenocha()){
+
+            celda.setRevelado(true);
+
+            if(gridCeldas.disminuirHipotenochas()){
+                Toast.makeText(this,"¡Enhorabuena has ganado!", Toast.LENGTH_SHORT).show();
+            }
+
+            setTextHipotenochas();
+            adapter.notifyDataSetChanged();
+
+        }else{
+            mostrarPerderPartida();
+        }
+
+    }
+
+
+    public void setTextHipotenochas(){
+
+        try {
+            int NHipotenochas = gridCeldas.getHipotenochas();
+            TextView texto = findViewById(R.id.textViewNHipotenochas);
+            texto.setText(String.valueOf(NHipotenochas));
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
     }
 }
