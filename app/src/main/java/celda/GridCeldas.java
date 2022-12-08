@@ -145,12 +145,9 @@ public class GridCeldas {
         return new int[]{x, y};
     }
 
-    public boolean disminuirHipotenochas(){
+    public void disminuirHipotenochas(){
         if(hipotenochas > 0){
             hipotenochas--;
-            return false;
-        }else{
-            return true;
         }
     }
 

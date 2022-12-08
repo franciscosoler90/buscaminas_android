@@ -95,11 +95,35 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
     public void mostrarPerderPartida() {
 
+        gridCeldas.setPartidaFinalizada(true);
         gridCeldas.revelarHipotenochas();
         adapter.notifyDataSetChanged();
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle(getString(R.string.perdido));
+        dialogo.setMessage(getString(R.string.reiniciar));
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
+            gridCeldas.reiniciarPartida();
+            setTextHipotenochas();
+            adapter.notifyDataSetChanged();
+
+        });
+        dialogo.setNegativeButton(getString(R.string.cancelar), (dialogo1, id) -> {
+            // cancelar();
+        });
+        dialogo.show();
+    }
+
+
+    public void mostrarGanarPartida() {
+
+        gridCeldas.setPartidaFinalizada(true);
+        gridCeldas.revelarHipotenochas();
+        adapter.notifyDataSetChanged();
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle(getString(R.string.ganado));
         dialogo.setMessage(getString(R.string.reiniciar));
         dialogo.setCancelable(false);
         dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
@@ -138,48 +162,48 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     @Override
     public void onCeldaClick(int posicion) {
 
-        Celda celda = gridCeldas.getCelda(posicion);
+        Celda celda1 = gridCeldas.getCelda(posicion);
 
-        if(celda == null){
+        if(celda1 == null){
+            return;
+        }
+
+        if (celda1.getRevelado()) {
             return;
         }
 
         if(gridCeldas.getPartidaFinalizada()) {
-            mostrarPerderPartida();
             return;
         }
 
-        if (celda.getRevelado()) {
-            return;
-        }
-
-        int fila = celda.getFila();
-        int columna = celda.getColumna();
+        int fila = celda1.getFila();
+        int columna = celda1.getColumna();
         int proximos = gridCeldas.proximidadHipotenochas(fila,columna);
-        celda.setRevelado(true);
+        celda1.setRevelado(true);
 
-        if (celda.getHipotenocha()) {
+        if (celda1.getHipotenocha()) {
 
-            gridCeldas.setPartidaFinalizada(true);
             mostrarPerderPartida();
 
-        }else{
-
-            if(proximos == 0) {
+        }else if(proximos == 0) {
 
                 List<Celda> toClear = new ArrayList<>();
                 List<Celda> toCheckAdjacents = new ArrayList<>();
-                toCheckAdjacents.add(celda);
+                toCheckAdjacents.add(celda1);
 
                 while (toCheckAdjacents.size() > 0) {
 
-                    Celda c = toCheckAdjacents.get(0);
+                    Celda celda2 = toCheckAdjacents.get(0);
 
-                    int[] celdaEnPosicion = gridCeldas.toXY(celda.getPosicion());
+                    int[] celdaEnPosicion = gridCeldas.toXY(celda2.getPosicion());
 
                     for (Celda adjacent : gridCeldas.getCeldasProximas(celdaEnPosicion[0], celdaEnPosicion[1])) {
 
-                        if (!adjacent.getHipotenocha()) {
+                        fila = adjacent.getFila();
+                        columna = adjacent.getColumna();
+                        proximos = gridCeldas.proximidadHipotenochas(fila,columna);
+
+                        if (proximos == 0) {
                             if (!toClear.contains(adjacent)) {
                                 if (!toCheckAdjacents.contains(adjacent)) {
                                     toCheckAdjacents.add(adjacent);
@@ -191,20 +215,17 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
                             }
                         }
                     }
-                    toCheckAdjacents.remove(c);
-                    toClear.add(c);
+                    toCheckAdjacents.remove(celda2);
+                    toClear.add(celda2);
                 }
 
-                for (Celda c : toClear) {
+                for (Celda celda3 : toClear) {
 
-                    if(!c.getHipotenocha()) {
-                        c.setRevelado(true);
+                    if(!celda3.getHipotenocha()) {
+                        celda3.setRevelado(true);
                     }
 
                 }
-
-
-            }
         }
 
         adapter.notifyDataSetChanged();
@@ -216,7 +237,15 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
         Celda celda = gridCeldas.getCelda(posicion);
 
+        if(celda == null){
+            return;
+        }
+
         if(celda.getMarcado()){
+            return;
+        }
+
+        if(gridCeldas.getPartidaFinalizada()) {
             return;
         }
 
@@ -225,12 +254,14 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
             celda.setRevelado(true);
             celda.setMarcado(true);
 
-            if(gridCeldas.disminuirHipotenochas()){
-                Toast.makeText(this,"¡Enhorabuena has ganado!", Toast.LENGTH_SHORT).show();
-            }
-
+            gridCeldas.disminuirHipotenochas();
             setTextHipotenochas();
+
             adapter.notifyDataSetChanged();
+
+            if(gridCeldas.getHipotenochas() == 0) {
+                mostrarGanarPartida();
+            }
 
         }else{
             mostrarPerderPartida();
@@ -250,4 +281,5 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         }
 
     }
+
 }
