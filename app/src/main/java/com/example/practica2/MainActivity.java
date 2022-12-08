@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
             try{
 
                 gridCeldas.generarGrid();
+                gridCeldas.setPartidaFinalizada(false);
 
                 gridRecyclerView.setLayoutManager(new GridLayoutManager(this, gridCeldas.getTamano()));
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         }
 
         if(valor == R.id.item3){
-            System.out.println(getString(R.string.seleccionarPersonaje));
+            seleccionarPersonaje();
             return true;
         }
 
@@ -90,6 +90,23 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+
+    public void seleccionarPersonaje(){
+
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+        dialogo.setTitle(getString(R.string.seleccionarPersonaje));
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
+
+
+        });
+        dialogo.setNegativeButton(getString(R.string.cancelar), (dialogo1, id) -> {
+            // cancelar();
+        });
+        dialogo.show();
+
     }
 
 

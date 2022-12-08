@@ -4,7 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -52,7 +52,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
 
     class GridCeldasViewHolder extends RecyclerView.ViewHolder {
-        Button botonCelda;
+        ImageButton botonCelda;
         LinearLayout layout;
 
         //Muestra el texto
@@ -66,7 +66,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
             if(celda.getMarcado()){
                 botonCelda.setBackgroundColor(Color.DKGRAY);
-                botonCelda.setText("H");
+                botonCelda.setImageResource(R.drawable.bandera);
                 return;
             }
 
@@ -88,39 +88,55 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
                         case 1:
                             botonCelda.setBackgroundColor(Color.parseColor("#3D7F34"));
+                            botonCelda.setImageResource(R.drawable.uno);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 2:
                             botonCelda.setBackgroundColor(Color.parseColor("#9A6A19"));
+                            botonCelda.setImageResource(R.drawable.dos);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 3:
                             botonCelda.setBackgroundColor(Color.parseColor("#DB371A"));
+                            botonCelda.setImageResource(R.drawable.tres);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 4:
                             botonCelda.setBackgroundColor(Color.parseColor("#C03016"));
+                            botonCelda.setImageResource(R.drawable.cuatro);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 5:
                             botonCelda.setBackgroundColor(Color.parseColor("#B72E15"));
+                            botonCelda.setImageResource(R.drawable.cinco);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 6:
                             botonCelda.setBackgroundColor(Color.parseColor("#AD2B14"));
+                            botonCelda.setImageResource(R.drawable.seis);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 7:
                             botonCelda.setBackgroundColor(Color.parseColor("#A42913"));
+                            botonCelda.setImageResource(R.drawable.siete);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                         case 8:
                             botonCelda.setBackgroundColor(Color.parseColor("#9B2712"));
+                            botonCelda.setImageResource(R.drawable.ocho);
+                            botonCelda.setColorFilter(Color.WHITE);
                             break;
 
                     }
 
-                    botonCelda.setText(String.valueOf(proximos));
+                    //botonCelda.setText(String.valueOf(proximos));
 
                 }
 
