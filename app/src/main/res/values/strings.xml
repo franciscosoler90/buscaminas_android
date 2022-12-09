@@ -33,4 +33,12 @@
         <item>Avanzado</item>
     </string-array>
 
+
+    <string-array name="configurarPersonaje">
+        <item>Conejo</item>
+        <item>Perro</item>
+        <item>Gato</item>
+    </string-array>
+
+
 </resources>

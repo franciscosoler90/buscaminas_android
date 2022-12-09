@@ -24,6 +24,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
     private final List<Celda> celdas;
     private final OnCeldaClickListener listener;
+    private int personaje;
 
     public GridCeldasRecyclerAdapter(List<Celda> celdas, OnCeldaClickListener listener) {
         super(diffCallback);
@@ -36,6 +37,10 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
     public GridCeldasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.celda_layout, parent, false);
         return new GridCeldasViewHolder(itemView);
+    }
+
+    public void setPersonaje(int personaje){
+        this.personaje = personaje;
     }
 
 
@@ -66,7 +71,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
             if(celda.getMarcado()){
                 botonCelda.setBackgroundColor(Color.DKGRAY);
-                botonCelda.setImageResource(R.drawable.bandera);
+                botonCelda.setImageResource(personaje);
                 return;
             }
 
@@ -136,7 +141,6 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
                     }
 
-                    //botonCelda.setText(String.valueOf(proximos));
 
                 }
 

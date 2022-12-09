@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import adapter.GridCeldasRecyclerAdapter;
 import celda.Celda;
 import celda.GridCeldas;
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
     private GridCeldasRecyclerAdapter adapter;
     private RecyclerView gridRecyclerView;
     private final GridCeldas gridCeldas = new GridCeldas();
+    private final int[] iconos = {R.drawable.conejo,R.drawable.perro,R.drawable.gato};
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
 
 
     public boolean onCreateOptionsMenu(Menu menu){
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
                 List<Celda> celdas = gridCeldas.getCeldas();
 
                 adapter = new GridCeldasRecyclerAdapter(celdas, this);
+
+                adapter.setPersonaje(iconos[0]);
 
                 gridRecyclerView.setAdapter(adapter);
 
@@ -94,21 +101,23 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         super.onPointerCaptureChanged(hasCapture);
     }
 
-
     public void seleccionarPersonaje(){
 
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
-        dialogo.setTitle(getString(R.string.seleccionarPersonaje));
-        dialogo.setCancelable(false);
-        dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
+        dialogo.setTitle(R.string.seleccionarPersonaje)
+                .setItems(R.array.configurarPersonaje, (dialog, which) -> {
 
+                    try {
+                        menu.getItem(0).setIcon(ContextCompat.getDrawable(this, iconos[which]));
+                        adapter.setPersonaje(iconos[which]);
+                        adapter.notifyDataSetChanged();
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
 
-        });
-        dialogo.setNegativeButton(getString(R.string.cancelar), (dialogo1, id) -> {
-            // cancelar();
-        });
+                });
+
         dialogo.show();
-
     }
 
 
@@ -162,9 +171,9 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
         dialogo.setTitle(getString(R.string.instrucciones));
         dialogo.setMessage(getString(R.string.instruccionesDetallado));
-        dialogo.setCancelable(false);
+        dialogo.setCancelable(true);
         dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
-            //aceptar();
+            //no hace nada;
         });
         dialogo.show();
     }
@@ -174,6 +183,13 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
         dialogo.setTitle(R.string.seleccionaModoJuego)
                 .setItems(R.array.configurarJuego2, (dialog, which) -> gridCeldas.setModoJuego(which));
 
+        int checkedItem = 0;
+        dialogo.setSingleChoiceItems(R.array.configurarJuego2, checkedItem, (dialog, which) -> gridCeldas.setModoJuego(which));
+
+        dialogo.setCancelable(false);
+        dialogo.setPositiveButton(getString(R.string.aceptar), (dialogo1, id) -> {
+            //no hace nada;
+        });
         dialogo.show();
     }
 

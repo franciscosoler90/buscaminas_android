@@ -8,7 +8,9 @@ public class GridCeldas {
 
     private final List<Celda> celdas = new ArrayList<>();
 
-    private Integer hipotenochas, tamano, modoJuego = 0;
+    private Integer hipotenochas;
+    private Integer tamano;
+    private Integer modoJuego = 0;
 
     private boolean partidaFinalizada;
 
