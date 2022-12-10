@@ -7,6 +7,7 @@ import celda.Celda;
 
 import java.util.Objects;
 
+//clase que calcula la diferencia entre dos listas, necesario para la implementacion de ListAdapter
 public class CeldaDiffUtil extends DiffUtil.ItemCallback<Celda> {
 
     @Override

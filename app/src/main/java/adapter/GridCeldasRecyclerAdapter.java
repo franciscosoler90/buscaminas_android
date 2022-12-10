@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
@@ -46,7 +45,11 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
     @Override
     public void onBindViewHolder(@NonNull GridCeldasRecyclerAdapter.GridCeldasViewHolder holder, int position) {
+
+        //llama a la funcion bind del viewHolder
         holder.bind(celdas.get(position));
+
+        //establece como no reciclable
         holder.setIsRecyclable(false);
     }
 
@@ -57,33 +60,40 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
 
     class GridCeldasViewHolder extends RecyclerView.ViewHolder {
-        ImageButton botonCelda;
-        LinearLayout layout;
+        final ImageButton botonCelda;
 
         //Muestra el texto
         public GridCeldasViewHolder(@NonNull View itemView) {
             super(itemView);
             botonCelda = itemView.findViewById(R.id.buttonCelda);
-            layout = itemView.findViewById(R.id.layoutCelda);
         }
 
         public void bind(final Celda celda) {
 
+            //si esta marcado
             if(celda.getMarcado()){
+
+                //color gris oscuro
                 botonCelda.setBackgroundColor(Color.DKGRAY);
+
+                //imagen del animal
                 botonCelda.setImageResource(personaje);
                 return;
             }
 
+            //si esta revelado
             if( celda.getRevelado() ){
 
-                if(celda.getHipotenocha()) {
+                //si hay animal
+                if(celda.getAnimal()) {
 
+                    //color negro
                     botonCelda.setBackgroundColor(Color.BLACK);
 
                 }else{
 
-                    int proximos = celda.getNumHipotenochas();
+                    //obtener el numero de animales
+                    int proximos = celda.getNumeroAnimales();
 
                     switch(proximos){
 
@@ -144,23 +154,36 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
                 }
 
+                //en caso contrario, pone la celda en el color por defecto
             }else{
+
+                //color gris claro
                 botonCelda.setBackgroundColor(Color.GRAY);
             }
 
+            //funcion de clic corto
             botonCelda.setOnClickListener(view -> {
+                //si el listener no es nulo
                 if(listener != null){
+                    //obtiene la posicion del adapter
                     int posicion = getAdapterPosition();
+                    //si la posicion no corresponde con la del recyclerview
                     if(posicion != RecyclerView.NO_POSITION){
+                        //llama a la funcion clic corto
                         listener.onCeldaClick(posicion);
                     }
                 }
             });
 
+            //funcion de clic largo
             botonCelda.setOnLongClickListener(view -> {
+                //si el listener no es nulo
                 if(listener != null){
+                    //obtiene la posicion del adapter
                     int posicion = getAdapterPosition();
+                    //si la posicion no corresponde con la del recyclerview
                     if(posicion != RecyclerView.NO_POSITION){
+                        //llama a la funcion clic largo
                         listener.onCeldaLongClick(posicion);
                     }
                 }

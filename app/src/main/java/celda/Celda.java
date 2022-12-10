@@ -5,21 +5,22 @@ public class Celda {
     private final int posicion;
     private final int fila;
     private final int columna;
-    private int numHipotenochas;
+    private int numeroAnimales;
     private boolean revelado;
-    private boolean hipotenocha;
-
+    private boolean esAnimal;
     private boolean marcado;
 
+    //constructor
     public Celda(int posicion, int fila, int columna){
         this.posicion = posicion;
         this.fila = fila;
         this.columna = columna;
         this.revelado = false;
-        this.hipotenocha = false;
+        this.esAnimal = false;
         this.marcado = false;
     }
 
+    //getters and setters
     public int getColumna() {
         return columna;
     }
@@ -40,12 +41,12 @@ public class Celda {
         return posicion;
     }
 
-    public boolean getHipotenocha() {
-        return hipotenocha;
+    public boolean getAnimal() {
+        return esAnimal;
     }
 
-    public void setHipotenocha(boolean hipotenocha) {
-        this.hipotenocha = hipotenocha;
+    public void setAnimal(boolean esAnimal) {
+        this.esAnimal = esAnimal;
     }
 
     public boolean getMarcado() {
@@ -56,12 +57,12 @@ public class Celda {
         this.marcado = marcado;
     }
 
-    public int getNumHipotenochas() {
-        return numHipotenochas;
+    public int getNumeroAnimales() {
+        return numeroAnimales;
     }
 
-    public void setNumHipotenochas(int numHipotenochas) {
-        this.numHipotenochas = numHipotenochas;
+    public void setNumeroAnimales(int numeroAnimales) {
+        this.numeroAnimales = numeroAnimales;
     }
 
 }

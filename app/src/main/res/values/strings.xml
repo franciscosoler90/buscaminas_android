@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Encuentra las Hipotenochas</string>
+    <string name="app_name">Encuentra los animales</string>
 
     <string name="nuevoJuego">Nuevo Juego</string>
     <string name="instrucciones">Instrucciones</string>
@@ -13,19 +13,20 @@
 
     <string name="reiniciar">¿Deseas reiniciar?</string>
 
-    <string name="restantes">Restantes: </string>
+    <string name="restantes">Animales restantes: </string>
 
     <string name="seleccionaModoJuego">Selecciona el modo de juego</string>
 
     <string name="instruccionesDetallado">
         El juego presentará al iniciarse un tablero para nivel principante (8 filas x 8
-        columnas) con 10 hipotenochas escondidas.\n\nEste tablero se puede configurar también
-        en modo amateur con 12x12 filas (30 hipotenochas) y modo avanzado con
-        16x16 filas (60 hipotenochas)\n\nEl usuario puede utilizar dos acciones: Clic o pulsación larga sobre una casilla
-        (marcar posición de hipotenocha) y clic o pulsación corta sobre una casilla
+        columnas) con 10 animales escondidos.\n\nEste tablero se puede configurar también
+        en modo amateur con 12x12 filas (30 animales) y modo avanzado con
+        16x16 filas (60 animales)\n\nEl usuario puede utilizar dos acciones: Clic o pulsación larga sobre una casilla
+        (marcar posición de animales) y clic o pulsación corta sobre una casilla
         (descubrir contenido de una casilla).
     </string>
 
+    <string name="yo">Francisco José Soler Conchello</string>
 
     <string-array name="configurarJuego2">
         <item>Principiante</item>

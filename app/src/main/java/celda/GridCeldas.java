@@ -8,34 +8,41 @@ public class GridCeldas {
 
     private final List<Celda> celdas = new ArrayList<>();
 
-    private Integer hipotenochas;
+    private Integer animales;
     private Integer tamano;
     private Integer modoJuego = 0;
 
     private boolean partidaFinalizada;
 
+    //constructor
     public GridCeldas(){
         this.tamano = 8;
-        this.hipotenochas = 10;
+        this.animales = 10;
     }
 
+
+    //funcion que genera una lista de celdas
     public void generarGrid(){
 
+
+        //inicializa lista
         ArrayList<Celda> nuevaLista = new ArrayList<>();
 
+
+        //dependiendo del modo de juego, genera un grid con un tamaño determinado y el numero de animales
         switch (this.modoJuego){
 
             case 1:
                 this.tamano = 12;
-                this.hipotenochas = 30;
+                this.animales = 30;
                 break;
             case 2:
                 this.tamano = 16;
-                this.hipotenochas = 60;
+                this.animales = 60;
                 break;
             default:
                 this.tamano = 8;
-                this.hipotenochas = 10;
+                this.animales = 10;
                 break;
         }
 
@@ -59,27 +66,30 @@ public class GridCeldas {
         this.celdas.clear();
         this.celdas.addAll(nuevaLista);
 
-        int bombas = 0;
+        int animales = 0;
 
-        while (bombas < hipotenochas) {
+        //bucle while que genera los animales
+        while (animales < this.animales) {
 
+            //filas y columnas aleatorias dentro del rango del tamaño del tablero
             int fila = new Random().nextInt(tamano);
             int columna = new Random().nextInt(tamano);
 
             Celda celda = getCelda(fila,columna);
 
-            if (!celda.getHipotenocha()) {
-                celda.setHipotenocha(true);
-                bombas++;
+            //si no hay un animal en la celda, lo pone a true
+            if (!celda.getAnimal()) {
+                celda.setAnimal(true);
+                animales++;
             }
         }
 
         int proximos;
 
+        //vuelve a recorrar la lista e introduce en cada celda el numero de celdas proximas
         for(Celda c : this.celdas){
-            proximos = proximidadHipotenochas(c.getFila(), c.getColumna());
-            System.out.println(proximos);
-            c.setNumHipotenochas(proximos);
+            proximos = proximidadAnimales(c.getFila(), c.getColumna());
+            c.setNumeroAnimales(proximos);
         }
 
     }
@@ -118,19 +128,19 @@ public class GridCeldas {
         return celdas;
     }
 
-    public int proximidadHipotenochas(int columna, int fila) {
+    public int proximidadAnimales(int columna, int fila) {
 
         List<Celda> celdasProximas = getCeldasProximas(fila, columna);
 
-        int hipotenochasProximas = 0;
+        int animalesProximos = 0;
 
         for (Celda c: celdasProximas){
-            if(c.getHipotenocha()){
-                hipotenochasProximas++;
+            if(c.getAnimal()){
+                animalesProximos++;
             }
         }
 
-        return hipotenochasProximas;
+        return animalesProximos;
     }
 
 
@@ -140,20 +150,13 @@ public class GridCeldas {
         generarGrid();
     }
 
-
-    public int[] toXY(int index) {
-        int y = index / tamano;
-        int x = index - (y*tamano);
-        return new int[]{x, y};
-    }
-
-    public void disminuirHipotenochas(){
-        if(hipotenochas > 0){
-            hipotenochas--;
+    public void disminuirAnimales(){
+        if(animales > 0){
+            animales--;
         }
     }
 
-    public void revelarHipotenochas(){
+    public void revelarAnimales(){
         for(Celda c : celdas){
             c.setRevelado(true);
         }
@@ -175,8 +178,8 @@ public class GridCeldas {
         return tamano;
     }
 
-    public Integer getHipotenochas() {
-        return hipotenochas;
+    public Integer getAnimales() {
+        return animales;
     }
 
     public void setModoJuego(Integer modoJuego) {
