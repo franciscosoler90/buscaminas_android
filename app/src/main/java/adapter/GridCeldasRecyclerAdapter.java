@@ -78,18 +78,14 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
         public void bind(final Celda celda) {
 
             //ajusta el tamaño del tablero
-            switch (tamano){
-                case 8:
-                    layout.setLayoutParams(new ViewGroup.LayoutParams(120, 120));
-                    break;
+            //amateur
+            if(tamano == 12){
+                layout.setLayoutParams(new ViewGroup.LayoutParams(80, 80));
+            }
 
-                case 12:
-                    layout.setLayoutParams(new ViewGroup.LayoutParams(80, 80));
-                    break;
-
-                case 16:
-                    layout.setLayoutParams(new ViewGroup.LayoutParams(60, 60));
-                    break;
+            //avanzado
+            if(tamano == 16){
+                layout.setLayoutParams(new ViewGroup.LayoutParams(60, 60));
             }
 
             //si esta marcado
