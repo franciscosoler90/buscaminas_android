@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
@@ -24,6 +25,7 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
     private final List<Celda> celdas;
     private final OnCeldaClickListener listener;
     private int personaje;
+    private int tamano;
 
     public GridCeldasRecyclerAdapter(List<Celda> celdas, OnCeldaClickListener listener) {
         super(diffCallback);
@@ -42,6 +44,9 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
         this.personaje = personaje;
     }
 
+    public void setTamano(int tamano) {
+        this.tamano = tamano;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull GridCeldasRecyclerAdapter.GridCeldasViewHolder holder, int position) {
@@ -61,14 +66,31 @@ public class GridCeldasRecyclerAdapter extends ListAdapter<Celda, GridCeldasRecy
 
     class GridCeldasViewHolder extends RecyclerView.ViewHolder {
         final ImageButton botonCelda;
+        final LinearLayout layout;
 
         //Muestra el texto
         public GridCeldasViewHolder(@NonNull View itemView) {
             super(itemView);
             botonCelda = itemView.findViewById(R.id.buttonCelda);
+            layout = itemView.findViewById(R.id.layoutCelda);
         }
 
         public void bind(final Celda celda) {
+
+            //ajusta el tamaño del tablero
+            switch (tamano){
+                case 8:
+                    layout.setLayoutParams(new ViewGroup.LayoutParams(120, 120));
+                    break;
+
+                case 12:
+                    layout.setLayoutParams(new ViewGroup.LayoutParams(80, 80));
+                    break;
+
+                case 16:
+                    layout.setLayoutParams(new ViewGroup.LayoutParams(60, 60));
+                    break;
+            }
 
             //si esta marcado
             if(celda.getMarcado()){

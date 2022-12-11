@@ -108,12 +108,14 @@ public class MainActivity extends AppCompatActivity implements OnCeldaClickListe
             //obtiene la lista generada de la clase gridCeldas
             List<Celda> celdas = gridCeldas.getCeldas();
 
-
             //le pasa el diseño estilo grid layout al recycler view, con un determinado tamaño
             gridRecyclerView.setLayoutManager(new GridLayoutManager(this, gridCeldas.getTamano()));
 
             //inicializa el adaptador pasandole la lista de celdas y el listener
             adapter = new GridCeldasRecyclerAdapter(celdas, this);
+
+            //le pasa el tamaño del tablero al adaptador
+            adapter.setTamano(gridCeldas.getTamano());
 
             //le pasa el adapter al gridRecyclerView
             gridRecyclerView.setAdapter(adapter);
